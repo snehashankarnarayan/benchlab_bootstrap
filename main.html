@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <meta charset="UTF-8">
+    <title>Benchlab Client</title>
+
+
+    <script>
+        var client = new XMLHttpRequest();
+
+
+        function upload()
+        {
+            var file = document.getElementById("tracefile");
+
+            /* Create a FormData instance */
+            var formData = new FormData();
+            /* Add the file */
+            formData.append("tracefile", file.files[0]);
+
+
+            client.open("POST", "http://localhost:9998/webapp/tracemanagement/upload_trace", true);
+            client.send(formData);  /* Send to server */
+        }
+
+        /* Check the response status */
+        client.onreadystatechange = function()
+        {
+            if (client.readyState == 4 && client.status == 200)
+            {
+                alert("Done!");
+            }
+        }
+    </script>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+    <input type="file" id="tracefile" name="tracefile" />
+    <input type="button" value="upload" onclick="upload()" />
+</form>
+<!-- Load javascript files at the end of the file -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
